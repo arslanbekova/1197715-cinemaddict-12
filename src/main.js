@@ -5,7 +5,7 @@ import {createContentSectionTemplate} from "./view/content-section.js";
 import {createFilmCardTemplate} from "./view/film-card.js";
 import {createLoadMoreButtonTemplate} from "./view/load-more-button.js";
 import {createFilmPopupTemplate} from "./view/film-popup.js";
-import {render} from "./view/utils.js";
+import {render} from "./utils.js";
 
 const MAX_NUMBER_ALL_FILMS_RENDERED_CARDS = 5;
 const MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS = 2;
