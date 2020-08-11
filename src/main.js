@@ -4,11 +4,15 @@ import {createSortListTemplate} from "./view/sort.js";
 import {createContentSectionTemplate} from "./view/content-section.js";
 import {createFilmCardTemplate} from "./view/film-card.js";
 import {createLoadMoreButtonTemplate} from "./view/load-more-button.js";
-import {createFilmPopupTemplate} from "./view/film-popup.js";
+// import {createFilmPopupTemplate} from "./view/film-popup.js";
 import {render} from "./utils.js";
+import {generateFilmCard} from "./mock/film-card.js";
 
+const NUMBER_ALL_FILMS_RENDERED_CARDS = 20;
 const MAX_NUMBER_ALL_FILMS_RENDERED_CARDS = 5;
 const MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS = 2;
+
+const films = new Array(NUMBER_ALL_FILMS_RENDERED_CARDS).fill().map(generateFilmCard);
 
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
@@ -23,9 +27,10 @@ const filmsElement = siteMainElement.querySelector(`.films`);
 const allFilmsListElement = filmsElement.querySelector(`.films-list`);
 const allFilmsCardsContainerElement = allFilmsListElement.querySelector(`.films-list__container`);
 
-Array(MAX_NUMBER_ALL_FILMS_RENDERED_CARDS).fill(``).forEach(() => {
-  render(allFilmsCardsContainerElement, createFilmCardTemplate());
-});
+for (let item of films) {
+  if (films.indexOf(item) >= MAX_NUMBER_ALL_FILMS_RENDERED_CARDS) break;
+  render(allFilmsCardsContainerElement, createFilmCardTemplate(item));
+};
 
 render(allFilmsListElement, createLoadMoreButtonTemplate());
 
@@ -39,4 +44,6 @@ Array(MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS).fill(``).forEach(() => {
   render(mostCommentedFilmsCardsContainerElement, createFilmCardTemplate());
 });
 
-render(siteFooterElement, createFilmPopupTemplate(), `afterend`);
+// render(siteFooterElement, createFilmPopupTemplate(), `afterend`);
+
+
