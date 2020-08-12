@@ -12,7 +12,7 @@ export const createFilmPopupTemplate = (popup) => {
     duration,
     country,
     getGenre,
-    description,
+    fullDescription,
     commentsCount,
   } = popup;
   return (
@@ -76,7 +76,7 @@ export const createFilmPopupTemplate = (popup) => {
               </table>
 
               <p class="film-details__film-description">
-                ${description}
+                ${fullDescription}
               </p>
             </div>
           </div>

@@ -28,7 +28,6 @@ const generateFilmTitle = () => {
   return films[randomIndex];
 };
 
-
 const generateFilmPoster = () => {
   const posters = [
     `/images/posters/made-for-each-other.png`,
@@ -45,7 +44,7 @@ const generateFilmPoster = () => {
   return posters[randomIndex];
 };
 
-const generateFilmDescription = () => {
+const generateFullFilmDescription = () => {
   const filmDescription = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
   const period = '.';
   let filmDescriptionInStrings = [];
@@ -57,6 +56,27 @@ const generateFilmDescription = () => {
   splitString(filmDescription, period);
 
   return filmDescriptionInStrings.splice(getRandomInteger(filmDescriptionInStrings.length)).join(`.`);
+};
+
+const generateFilmDescription = () => {
+  const filmDescription = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
+  const period = '.';
+  let filmDescriptionInStrings = [];
+
+  const splitString = (stringToSplit, separator) => {
+    return filmDescriptionInStrings = stringToSplit.split(separator);
+  };
+
+  splitString(filmDescription, period);
+
+  const newFilmDescription = filmDescriptionInStrings.splice(getRandomInteger(filmDescriptionInStrings.length)).join(`.`);
+  const newFilmDescriptionLength = newFilmDescription.length;
+
+  if (newFilmDescriptionLength > 140) {
+    return newFilmDescription.slice(0, 139) + `...`
+  };
+
+  return newFilmDescription;
 };
 
 const generateFilmRate = () => {
@@ -113,6 +133,10 @@ const generateRandomDate = (start, end) => {
   return dateFormat(releaseDate, 'dd mmmm yyyy');
 }
 
+const generateProductionYear = () => {
+  return getRandomInteger(1920, 2000);
+};
+
 const generateFilmDuration = () => {
   return getRandomInteger(1, 3) + `h` + ` ` + getRandomInteger(1, 59) + `m`;
 };
@@ -140,31 +164,48 @@ const generateFilmGenre = () => {
     `Detective`,
   ];
 
+  const randomIndex = getRandomInteger(0, genres.length - 1);
+
+  return genres[randomIndex];
+};
+
+const generateFilmGenres = () => {
+  const genres = [
+    `Musical`,
+    `Comedy`,
+    `Drama`,
+    `Adventure`,
+    `Detective`,
+  ];
+
   const randomArrayOfGenres = genres.slice(getRandomInteger(0, genres.length - 1));
   return randomArrayOfGenres;
 };
 
-export const generateFilmPopup = () => {
-  const filmPopup = {
+export const generateFilm = () => {
+  const film = {
     poster: generateFilmPoster(),
     ageLimit: getRandomInteger(0, 18),
     title: generateFilmTitle(),
     titleOrigin: generateFilmTitle(),
     rate: generateFilmRate(),
+    productionYear: generateProductionYear(),
     director: generateFilmDirector(),
     writers: generateFilmWriters(),
     actors: generateFilmActors(),
     releaseDate: generateRandomDate(new Date(1925, 1, 0), new Date()),
     duration: generateFilmDuration(),
     country: generateFilmCountry(),
-    genres: generateFilmGenre(),
+    genres: generateFilmGenres(),
+    genre: generateFilmGenre(),
     getGenre: function () {
-      const randomIndex = getRandomInteger(0, filmPopup.genres.length - 1);
-      return filmPopup.genres[randomIndex];
+      const randomIndex = getRandomInteger(0, film.genres.length - 1);
+      return film.genres[randomIndex];
     },
     description: generateFilmDescription(),
+    fullDescription: generateFullFilmDescription(),
     commentsCount: getRandomInteger(0, 5),
   };
 
-  return filmPopup;
+  return film;
 };

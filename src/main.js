@@ -7,8 +7,7 @@ import {createLoadMoreButtonTemplate} from "./view/load-more-button.js";
 import {createFooterStatisticTemplate} from "./view/footer-statistic.js";
 import {createFilmPopupTemplate} from "./view/film-popup.js";
 import {render} from "./utils.js";
-import {generateFilmCard} from "./mock/film-card.js";
-import {generateFilmPopup} from "./mock/film-popup.js";
+import {generateFilm} from "./mock/film.js";
 import {generateUserRank} from "./mock/user-rank.js";
 import {generateFooterStatistic} from "./mock/footer-statistic.js";
 import {generateSiteMenuFilters} from "./mock/site-menu.js";
@@ -17,8 +16,7 @@ const NUMBER_ALL_FILMS_RENDERED_CARDS = 20;
 const MAX_NUMBER_ALL_FILMS_RENDERED_CARDS = 5;
 const MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS = 2;
 
-const films = new Array(NUMBER_ALL_FILMS_RENDERED_CARDS).fill().map(generateFilmCard);
-const popup = generateFilmPopup();
+const films = new Array(NUMBER_ALL_FILMS_RENDERED_CARDS).fill().map(generateFilm);
 
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
@@ -52,4 +50,4 @@ const mostCommentedFilmsCardsContainerElement = mostCommentedFilmsListElement.qu
 
 render(siteFooterElement, createFooterStatisticTemplate(generateFooterStatistic))
 
-// render(siteFooterElement, createFilmPopupTemplate(popup), `afterend`);
+render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
