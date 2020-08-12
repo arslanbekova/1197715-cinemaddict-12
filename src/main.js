@@ -3,7 +3,7 @@ import {createSiteMenuTemplate} from "./view/site-menu.js";
 import {createSortListTemplate} from "./view/sort.js";
 import {createContentSectionTemplate} from "./view/content-section.js";
 import {createFilmCardTemplate} from "./view/film-card.js";
-import {createLoadMoreButtonTemplate} from "./view/load-more-button.js";
+import {createShowMoreButtonTemplate} from "./view/show-more-button.js";
 import {createFooterStatisticTemplate} from "./view/footer-statistic.js";
 import {createFilmPopupTemplate} from "./view/film-popup.js";
 import {render} from "./utils.js";
@@ -14,6 +14,7 @@ import {generateSiteMenuFilters} from "./mock/site-menu.js";
 
 const NUMBER_ALL_FILMS_RENDERED_CARDS = 20;
 const MAX_NUMBER_ALL_FILMS_RENDERED_CARDS = 5;
+const ALL_FILMS_RENDERED_CARDS_PER_STEP = 5;
 const MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS = 2;
 
 const films = new Array(NUMBER_ALL_FILMS_RENDERED_CARDS).fill().map(generateFilm);
@@ -36,7 +37,27 @@ for (let film of films) {
   render(allFilmsCardsContainerElement, createFilmCardTemplate(film));
 };
 
-render(allFilmsListElement, createLoadMoreButtonTemplate());
+if (films.length > ALL_FILMS_RENDERED_CARDS_PER_STEP) {
+  let renderedFilms = ALL_FILMS_RENDERED_CARDS_PER_STEP;
+
+  render(allFilmsListElement, createShowMoreButtonTemplate());
+
+  const showMoreButton = allFilmsListElement.querySelector(`.films-list__show-more`);
+
+  showMoreButton.addEventListener(`click`, (evt) => {
+    evt.preventDefault();
+
+    films
+      .slice(renderedFilms, renderedFilms + ALL_FILMS_RENDERED_CARDS_PER_STEP)
+      .forEach((film) => render(allFilmsCardsContainerElement, createFilmCardTemplate(film)));
+
+    renderedFilms += ALL_FILMS_RENDERED_CARDS_PER_STEP;
+
+    if (renderedFilms >= films.length) {
+      showMoreButton.remove();
+    }
+  });
+};
 
 const extraFilmsListElements = filmsElement.querySelectorAll(`.films-list--extra`);
 const [topRatedFilmsListElement, mostCommentedFilmsListElement] = extraFilmsListElements;
@@ -51,4 +72,4 @@ for (let film of films) {
 
 render(siteFooterElement, createFooterStatisticTemplate(generateFooterStatistic))
 
-// render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
+render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
