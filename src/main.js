@@ -11,7 +11,7 @@ import {generateFilmCard} from "./mock/film-card.js";
 import {generateFilmPopup} from "./mock/film-popup.js";
 import {generateUserRank} from "./mock/user-rank.js";
 import {generateFooterStatistic} from "./mock/footer-statistic.js";
-
+import {generateSiteMenuFilters} from "./mock/site-menu.js";
 
 const NUMBER_ALL_FILMS_RENDERED_CARDS = 20;
 const MAX_NUMBER_ALL_FILMS_RENDERED_CARDS = 5;
@@ -25,7 +25,7 @@ const siteMainElement = document.querySelector(`.main`);
 const siteFooterElement = document.querySelector(`.footer`);
 
 render(siteHeaderElement, createUserRankTemplate(generateUserRank));
-render(siteMainElement, createSiteMenuTemplate());
+render(siteMainElement, createSiteMenuTemplate(generateSiteMenuFilters));
 render(siteMainElement, createSortListTemplate());
 render(siteMainElement, createContentSectionTemplate());
 
