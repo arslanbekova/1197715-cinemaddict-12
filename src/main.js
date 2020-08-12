@@ -4,11 +4,14 @@ import {createSortListTemplate} from "./view/sort.js";
 import {createContentSectionTemplate} from "./view/content-section.js";
 import {createFilmCardTemplate} from "./view/film-card.js";
 import {createLoadMoreButtonTemplate} from "./view/load-more-button.js";
+import {createFooterStatisticTemplate} from "./view/footer-statistic.js";
 import {createFilmPopupTemplate} from "./view/film-popup.js";
 import {render} from "./utils.js";
 import {generateFilmCard} from "./mock/film-card.js";
 import {generateFilmPopup} from "./mock/film-popup.js";
 import {generateUserRank} from "./mock/user-rank.js";
+import {generateFooterStatistic} from "./mock/footer-statistic.js";
+
 
 const NUMBER_ALL_FILMS_RENDERED_CARDS = 20;
 const MAX_NUMBER_ALL_FILMS_RENDERED_CARDS = 5;
@@ -47,4 +50,6 @@ const mostCommentedFilmsCardsContainerElement = mostCommentedFilmsListElement.qu
 //   render(mostCommentedFilmsCardsContainerElement, createFilmCardTemplate());
 // });
 
-render(siteFooterElement, createFilmPopupTemplate(popup), `afterend`);
+render(siteFooterElement, createFooterStatisticTemplate(generateFooterStatistic))
+
+// render(siteFooterElement, createFilmPopupTemplate(popup), `afterend`);
