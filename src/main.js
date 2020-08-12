@@ -43,11 +43,12 @@ const [topRatedFilmsListElement, mostCommentedFilmsListElement] = extraFilmsList
 const topRatedFilmsCardsContainerElement = topRatedFilmsListElement.querySelector(`.films-list__container`);
 const mostCommentedFilmsCardsContainerElement = mostCommentedFilmsListElement.querySelector(`.films-list__container`);
 
-// Array(MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS).fill(``).forEach(() => {
-//   render(topRatedFilmsCardsContainerElement, createFilmCardTemplate());
-//   render(mostCommentedFilmsCardsContainerElement, createFilmCardTemplate());
-// });
+for (let film of films) {
+  if (films.indexOf(film) >= MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS) break;
+  render(topRatedFilmsCardsContainerElement, createFilmCardTemplate(film));
+  render(mostCommentedFilmsCardsContainerElement, createFilmCardTemplate(film));
+};
 
 render(siteFooterElement, createFooterStatisticTemplate(generateFooterStatistic))
 
-render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
+// render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
