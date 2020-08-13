@@ -18,13 +18,16 @@ const ALL_FILMS_RENDERED_CARDS_PER_STEP = 5;
 const MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS = 2;
 
 const films = new Array(NUMBER_ALL_FILMS_RENDERED_CARDS).fill().map(generateFilm);
+console.log(films);
+const filters = generateSiteMenuFilters(films);
+console.log(filters);
 
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 const siteFooterElement = document.querySelector(`.footer`);
 
 render(siteHeaderElement, createUserRankTemplate(generateUserRank));
-render(siteMainElement, createSiteMenuTemplate(generateSiteMenuFilters));
+render(siteMainElement, createSiteMenuTemplate(filters));
 render(siteMainElement, createSortListTemplate());
 render(siteMainElement, createContentSectionTemplate());
 
@@ -72,4 +75,4 @@ for (let film of films) {
 
 render(siteFooterElement, createFooterStatisticTemplate(generateFooterStatistic))
 
-render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
+// render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
