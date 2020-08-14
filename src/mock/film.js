@@ -1,4 +1,4 @@
-import {dateFormat} from "../main.js";
+import moment from 'moment';
 
 const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -123,13 +123,13 @@ const generateRandomDate = (start, end) => {
 };
 
 const generateReleaseDate = () => {
-  const releaseDate = generateRandomDate(new Date(1925, 1, 0), new Date()).toLocaleDateString(`en`);
-  return dateFormat(releaseDate, `dd mmmm yyyy`);
+  const releaseDate = generateRandomDate(new Date(1925, 1, 0), new Date());
+  return moment(releaseDate).locale('en').format(`DD MMMM YYYY`);
 };
 
 const generateCommentDate = () => {
   const commentDate = generateRandomDate(new Date(2010, 1, 0), new Date());
-  return dateFormat(commentDate, `yyyy/mm/dd hh:mm`);
+  return moment(commentDate).format(`YYYY/MM/DD hh:mm`);
 };
 
 const generateProductionYear = () => {

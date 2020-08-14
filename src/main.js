@@ -12,8 +12,6 @@ import {generateUserRank} from "./mock/user-rank.js";
 import {generateFooterStatistic} from "./mock/footer-statistic.js";
 import {generateSiteMenuFilters} from "./mock/site-menu.js";
 
-export const dateFormat = require(`dateformat`);
-
 const NUMBER_ALL_FILMS_RENDERED_CARDS = 20;
 const MAX_NUMBER_ALL_FILMS_RENDERED_CARDS = 5;
 const ALL_FILMS_RENDERED_CARDS_PER_STEP = 5;
