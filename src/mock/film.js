@@ -118,10 +118,18 @@ const generateFilmActors = () => {
 };
 
 const generateRandomDate = (start, end) => {
-  const releaseDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toLocaleDateString('en');
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
 
+const generateReleaseDate = () => {
+  const releaseDate = generateRandomDate(new Date(1925, 1, 0), new Date()).toLocaleDateString('en');
   return dateFormat(releaseDate, 'dd mmmm yyyy');
 }
+
+const generateCommentDate = () => {
+  const commentDate = generateRandomDate(new Date(2010, 1, 0), new Date());
+  return dateFormat(commentDate, 'yyyy/mm/dd hh:mm');
+};
 
 const generateProductionYear = () => {
   return getRandomInteger(1920, 2000);
@@ -158,8 +166,50 @@ const generateFilmGenres = () => {
   return randomArrayOfGenres;
 };
 
+const generateCommentEmotion = () => {
+  const emotions = [
+    `smile`,
+    `sleeping`,
+    `puke`,
+    `angry`,
+  ];
+
+  const randomIndex = getRandomInteger(0, emotions.length - 1);
+
+  return emotions[randomIndex];
+};
+
+const generateCommentAuthor = () => {
+  const authors = [
+    `Joe`,
+    `Phoebe`,
+    `Monika`,
+    `Rachel`,
+    `Chendler`,
+    `Ross`,
+  ];
+
+  const randomIndex = getRandomInteger(0, authors.length - 1);
+
+  return authors[randomIndex];
+};
+
+const generateComments = (commentsCount) => {
+  const createComment = () => {
+    return {
+      text: generateFilmDescription(),
+      emotion: generateCommentEmotion(),
+      author: generateCommentAuthor(),
+      date: generateCommentDate(),
+    }
+  }
+  const comments = new Array(commentsCount).fill().map(createComment);
+  return comments;
+};
+
 export const generateFilm = () => {
   const genres = generateFilmGenres();
+  const commentsCount = getRandomInteger(0, 500);
   return {
     poster: generateFilmPoster(),
     ageLimit: getRandomInteger(0, 18),
@@ -170,7 +220,7 @@ export const generateFilm = () => {
     director: generateFilmDirector(),
     writers: generateFilmWriters(),
     actors: generateFilmActors(),
-    releaseDate: generateRandomDate(new Date(1925, 1, 0), new Date()),
+    releaseDate: generateReleaseDate(),
     duration: generateFilmDuration(),
     country: generateFilmCountry(),
     getGenre: function () {
@@ -179,7 +229,8 @@ export const generateFilm = () => {
     },
     description: generateFilmDescription(),
     fullDescription: generateFullFilmDescription(),
-    commentsCount: getRandomInteger(0, 5),
+    commentsCount,
+    comments: generateComments(commentsCount),
     isAtWatchlist: Boolean(getRandomInteger()),
     isWatched: Boolean(getRandomInteger()),
     isFavorite: Boolean(getRandomInteger()),

@@ -73,4 +73,4 @@ for (let film of films) {
 
 render(siteFooterElement, createFooterStatisticTemplate(generateFooterStatistic))
 
-// render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
+render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
