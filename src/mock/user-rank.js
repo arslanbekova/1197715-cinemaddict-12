@@ -5,12 +5,12 @@ export const generateUserRank = (films) => {
   ] = films;
   const watchedFilmsCount = history.count;
   if (watchedFilmsCount === 0) {
-    return ``
+    return ``;
   } else if (watchedFilmsCount >= 1 && watchedFilmsCount <= 10) {
-    return `novice`
+    return `novice`;
   } else if (watchedFilmsCount >= 11 && watchedFilmsCount <= 20) {
-    return `fan`
+    return `fan`;
   } else {
-    return `movie buff`
+    return `movie buff`;
   }
 };

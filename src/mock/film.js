@@ -1,4 +1,4 @@
-const dateFormat = require(`dateformat`);
+import {dateFormat} from "../main.js";
 
 const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -46,11 +46,12 @@ const generateFilmPoster = () => {
 
 const generateFullFilmDescription = () => {
   const filmDescription = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
-  const period = '.';
+  const period = `.`;
   let filmDescriptionInStrings = [];
 
   const splitString = (stringToSplit, separator) => {
-    return filmDescriptionInStrings = stringToSplit.split(separator);
+    filmDescriptionInStrings = stringToSplit.split(separator);
+    return filmDescriptionInStrings;
   };
 
   splitString(filmDescription, period);
@@ -63,8 +64,8 @@ const generateFilmDescription = () => {
   const newFilmDescriptionLength = newFilmDescription.length;
 
   if (newFilmDescriptionLength > 140) {
-    return newFilmDescription.slice(0, 139) + `...`
-  };
+    return newFilmDescription.slice(0, 139) + `...`;
+  }
 
   return newFilmDescription;
 };
@@ -119,16 +120,16 @@ const generateFilmActors = () => {
 
 const generateRandomDate = (start, end) => {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
+};
 
 const generateReleaseDate = () => {
-  const releaseDate = generateRandomDate(new Date(1925, 1, 0), new Date()).toLocaleDateString('en');
-  return dateFormat(releaseDate, 'dd mmmm yyyy');
-}
+  const releaseDate = generateRandomDate(new Date(1925, 1, 0), new Date()).toLocaleDateString(`en`);
+  return dateFormat(releaseDate, `dd mmmm yyyy`);
+};
 
 const generateCommentDate = () => {
   const commentDate = generateRandomDate(new Date(2010, 1, 0), new Date());
-  return dateFormat(commentDate, 'yyyy/mm/dd hh:mm');
+  return dateFormat(commentDate, `yyyy/mm/dd hh:mm`);
 };
 
 const generateProductionYear = () => {
@@ -201,14 +202,13 @@ const generateComments = (commentsCount) => {
       emotion: generateCommentEmotion(),
       author: generateCommentAuthor(),
       date: generateCommentDate(),
-    }
-  }
+    };
+  };
   const comments = new Array(commentsCount).fill().map(createComment);
   return comments;
 };
 
 export const generateFilm = () => {
-  const genres = generateFilmGenres();
   const commentsCount = getRandomInteger(0, 500);
   return {
     poster: generateFilmPoster(),
@@ -223,10 +223,7 @@ export const generateFilm = () => {
     releaseDate: generateReleaseDate(),
     duration: generateFilmDuration(),
     country: generateFilmCountry(),
-    getGenre: function () {
-      const randomIndex = getRandomInteger(0, genres.length - 1);
-      return genres[randomIndex];
-    },
+    genre: generateFilmGenres(),
     description: generateFilmDescription(),
     fullDescription: generateFullFilmDescription(),
     commentsCount,

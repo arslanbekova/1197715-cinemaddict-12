@@ -7,5 +7,5 @@ const getRandomInteger = (a = 0, b = 1) => {
 
 export const generateFooterStatistic = () => {
   const filmsCount = getRandomInteger(100000, 200000);
-  return new Intl.NumberFormat('ru-RU').format(filmsCount);
+  return new Intl.NumberFormat(`ru-RU`).format(filmsCount);
 };

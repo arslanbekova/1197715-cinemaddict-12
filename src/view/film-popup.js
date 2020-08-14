@@ -11,7 +11,7 @@ export const createFilmPopupTemplate = (popup) => {
     releaseDate,
     duration,
     country,
-    getGenre,
+    genre,
     fullDescription,
     commentsCount,
     comments,
@@ -70,9 +70,9 @@ export const createFilmPopupTemplate = (popup) => {
                 <tr class="film-details__row">
                   <td class="film-details__term">Genres</td>
                   <td class="film-details__cell">
-                    <span class="film-details__genre">${getGenre()}</span>
-                    <span class="film-details__genre">${getGenre()}</span>
-                    <span class="film-details__genre">${getGenre()}</span></td>
+                    <span class="film-details__genre">${genre[0]}</span>
+                    <span class="film-details__genre">${genre[1]}</span>
+                    <span class="film-details__genre">${genre[2]}</span></td>
                 </tr>
               </table>
 
