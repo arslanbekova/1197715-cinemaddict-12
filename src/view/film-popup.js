@@ -15,7 +15,7 @@ export const createFilmPopupTemplate = (popup) => {
     country,
     genres,
     fullDescription,
-    commentsCount,
+    // commentsCount,
     comments,
   } = popup;
 
@@ -129,7 +129,7 @@ export const createFilmPopupTemplate = (popup) => {
         </div>
         <div class="form-details__bottom-container">
           <section class="film-details__comments-wrap">
-            <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${commentsCount}</span></h3>
+            <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
             <ul class="film-details__comments-list">
               ${getTemplate(comments, createFilmCommentTemplate)}

@@ -209,7 +209,6 @@ const generateComments = (commentsCount) => {
 };
 
 export const generateFilm = () => {
-  const commentsCount = getRandomInteger(0, 5);
   return {
     poster: generateFilmPoster(),
     ageLimit: getRandomInteger(0, 18),
@@ -226,8 +225,7 @@ export const generateFilm = () => {
     genres: generateFilmGenres(),
     description: generateFilmDescription(),
     fullDescription: generateFullFilmDescription(),
-    commentsCount,
-    comments: generateComments(commentsCount),
+    comments: generateComments(getRandomInteger(0, 5)),
     isAtWatchlist: Boolean(getRandomInteger()),
     isWatched: Boolean(getRandomInteger()),
     isFavorite: Boolean(getRandomInteger()),
