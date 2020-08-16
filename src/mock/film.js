@@ -209,7 +209,7 @@ const generateComments = (commentsCount) => {
 };
 
 export const generateFilm = () => {
-  const commentsCount = getRandomInteger(0, 500);
+  const commentsCount = getRandomInteger(0, 5);
   return {
     poster: generateFilmPoster(),
     ageLimit: getRandomInteger(0, 18),

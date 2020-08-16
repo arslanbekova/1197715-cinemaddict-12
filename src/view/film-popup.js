@@ -1,3 +1,5 @@
+import {getTemplate} from "../utils.js";
+
 export const createFilmPopupTemplate = (popup) => {
   const {
     poster,
@@ -17,17 +19,31 @@ export const createFilmPopupTemplate = (popup) => {
     comments,
   } = popup;
 
-  const createFilmGenresTemplate = (data) => {
-    const getTemplate = (genre) => {
-      return (
-        `<span class="film-details__genre">${genre}</span>`
-      );
-    };
-
-    return data.map((item) => getTemplate(item)).join(``);
+  const createFilmGenresTemplate = (genre) => {
+    return (
+      `<span class="film-details__genre">${genre}</span>`
+    );
   };
 
-  const getGenreWordform = () => {
+  const createFilmCommentTemplate = (comment) => {
+    return (
+      `<li class="film-details__comment">
+        <span class="film-details__comment-emoji">
+          <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji-${comment.emotion}">
+        </span>
+        <div>
+          <p class="film-details__comment-text">${comment.text}</p>
+          <p class="film-details__comment-info">
+            <span class="film-details__comment-author">${comment.author}</span>
+            <span class="film-details__comment-day">${comment.date}</span>
+            <button class="film-details__comment-delete">Delete</button>
+          </p>
+        </div>
+      </li>`
+    );
+  };
+
+  const getGenreWordForm = () => {
     if (genres.length === 1) {
       return `Genre`;
     } else {
@@ -87,9 +103,9 @@ export const createFilmPopupTemplate = (popup) => {
                   <td class="film-details__cell">${country}</td>
                 </tr>
                 <tr class="film-details__row">
-                  <td class="film-details__term">${getGenreWordform()}</td>
+                  <td class="film-details__term">${getGenreWordForm()}</td>
                   <td class="film-details__cell">
-                    ${createFilmGenresTemplate(genres)}
+                    ${getTemplate(genres, createFilmGenresTemplate)}
                   </td>
                 </tr>
               </table>
@@ -116,58 +132,7 @@ export const createFilmPopupTemplate = (popup) => {
             <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${commentsCount}</span></h3>
 
             <ul class="film-details__comments-list">
-              <li class="film-details__comment">
-                <span class="film-details__comment-emoji">
-                  <img src="./images/emoji/${comments[0].emotion}.png" width="55" height="55" alt="emoji-${comments[0].emotion}">
-                </span>
-                <div>
-                  <p class="film-details__comment-text">${comments[0].text}</p>
-                  <p class="film-details__comment-info">
-                    <span class="film-details__comment-author">${comments[0].author}</span>
-                    <span class="film-details__comment-day">${comments[0].date}</span>
-                    <button class="film-details__comment-delete">Delete</button>
-                  </p>
-                </div>
-              </li>
-              <li class="film-details__comment">
-                <span class="film-details__comment-emoji">
-                  <img src="./images/emoji/${comments[1].emotion}.png" width="55" height="55" alt="emoji-${comments[1].emotion}">
-                </span>
-                <div>
-                  <p class="film-details__comment-text">${comments[1].text}</p>
-                  <p class="film-details__comment-info">
-                    <span class="film-details__comment-author">${comments[1].author}</span>
-                    <span class="film-details__comment-day">${comments[1].date}</span>
-                    <button class="film-details__comment-delete">Delete</button>
-                  </p>
-                </div>
-              </li>
-              <li class="film-details__comment">
-                <span class="film-details__comment-emoji">
-                  <img src="./images/emoji/${comments[2].emotion}.png" width="55" height="55" alt="emoji-${comments[2].emotion}">
-                </span>
-                <div>
-                  <p class="film-details__comment-text">${comments[2].text}</p>
-                  <p class="film-details__comment-info">
-                    <span class="film-details__comment-author">${comments[2].author}</span>
-                    <span class="film-details__comment-day">${comments[2].date}</span>
-                    <button class="film-details__comment-delete">Delete</button>
-                  </p>
-                </div>
-              </li>
-              <li class="film-details__comment">
-                <span class="film-details__comment-emoji">
-                  <img src="./images/emoji/${comments[3].emotion}.png" width="55" height="55" alt="emoji-${comments[3].emotion}">
-                </span>
-                <div>
-                  <p class="film-details__comment-text">${comments[3].text}</p>
-                  <p class="film-details__comment-info">
-                    <span class="film-details__comment-author">${comments[3].author}</span>
-                    <span class="film-details__comment-day">${comments[3].date}</span>
-                    <button class="film-details__comment-delete">Delete</button>
-                  </p>
-                </div>
-              </li>
+              ${getTemplate(comments, createFilmCommentTemplate)}
             </ul>
 
             <div class="film-details__new-comment">
