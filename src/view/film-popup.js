@@ -11,11 +11,30 @@ export const createFilmPopupTemplate = (popup) => {
     releaseDate,
     duration,
     country,
-    genre,
+    genres,
     fullDescription,
     commentsCount,
     comments,
   } = popup;
+
+  const createFilmGenresTemplate = (data) => {
+    const getTemplate = (genre) => {
+      return (
+        `<span class="film-details__genre">${genre}</span>`
+      );
+    };
+
+    return data.map((item) => getTemplate(item)).join(``);
+  };
+
+  const getGenreWordform = () => {
+    if (genres.length === 1) {
+      return `Genre`;
+    } else {
+      return `Genres`;
+    }
+  };
+
   return (
     `<section class="film-details">
       <form class="film-details__inner" action="" method="get">
@@ -68,11 +87,10 @@ export const createFilmPopupTemplate = (popup) => {
                   <td class="film-details__cell">${country}</td>
                 </tr>
                 <tr class="film-details__row">
-                  <td class="film-details__term">Genres</td>
+                  <td class="film-details__term">${getGenreWordform()}</td>
                   <td class="film-details__cell">
-                    <span class="film-details__genre">${genre[0]}</span>
-                    <span class="film-details__genre">${genre[1]}</span>
-                    <span class="film-details__genre">${genre[2]}</span></td>
+                    ${createFilmGenresTemplate(genres)}
+                  </td>
                 </tr>
               </table>
 

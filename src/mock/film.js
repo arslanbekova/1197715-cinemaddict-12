@@ -124,7 +124,7 @@ const generateRandomDate = (start, end) => {
 
 const generateReleaseDate = () => {
   const releaseDate = generateRandomDate(new Date(1925, 1, 0), new Date());
-  return moment(releaseDate).locale('en').format(`DD MMMM YYYY`);
+  return moment(releaseDate).locale(`en`).format(`DD MMMM YYYY`);
 };
 
 const generateCommentDate = () => {
@@ -223,7 +223,7 @@ export const generateFilm = () => {
     releaseDate: generateReleaseDate(),
     duration: generateFilmDuration(),
     country: generateFilmCountry(),
-    genre: generateFilmGenres(),
+    genres: generateFilmGenres(),
     description: generateFilmDescription(),
     fullDescription: generateFullFilmDescription(),
     commentsCount,
