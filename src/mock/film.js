@@ -162,8 +162,15 @@ const generateFilmGenres = () => {
     `Detective`,
   ];
 
-  const randomArrayOfGenres = genres.slice(getRandomInteger(0, genres.length - 1));
-  return randomArrayOfGenres;
+  const shuffledGenres = genres.sort(() => 0.5 - Math.random());
+
+  let randomGenres = [];
+
+  for (let i = 0; i < getRandomInteger(0, genres.length); i++) {
+    randomGenres.push(shuffledGenres[Math.floor(Math.random() * shuffledGenres.length)]);
+  }
+
+  return randomGenres;
 };
 
 const generateCommentEmotion = () => {
