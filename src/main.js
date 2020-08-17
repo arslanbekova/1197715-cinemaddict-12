@@ -9,7 +9,6 @@ import {createFilmPopupTemplate} from "./view/film-popup.js";
 import {render} from "./utils.js";
 import {generateFilm} from "./mock/film.js";
 import {generateUserRank} from "./mock/user-rank.js";
-import {generateFooterStatistic} from "./mock/footer-statistic.js";
 import {generateSiteMenuFilters} from "./mock/site-menu.js";
 
 const NUMBER_ALL_FILMS_RENDERED_CARDS = 20;
@@ -71,6 +70,7 @@ for (let film of films) {
   render(mostCommentedFilmsCardsContainerElement, createFilmCardTemplate(film));
 };
 
-render(siteFooterElement, createFooterStatisticTemplate(generateFooterStatistic))
+const [, watched] = filters;
+render(siteFooterElement, createFooterStatisticTemplate(watched.count))
 
-render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
+// render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
