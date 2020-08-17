@@ -4,6 +4,13 @@ import {getRandomInteger} from "../utils.js";
 import {getRandomFractional} from "../utils.js";
 import {generateRandomList} from "../utils.js";
 
+const FILM_RATE_MAX = 10;
+const AGE_LIMIT_MAX = 18;
+const COMMENTS_COUNT_MAX = 5;
+const FILM_DESCRIPTION_SENTENCES_MAX = 5;
+const FILM_DESCRIPTION_LENGTH_MAX = 140;
+const FILM_DESCRIPTION_RENDERED_SIGNS = 139;
+
 const emotions = [
   `smile`,
   `sleeping`,
@@ -79,7 +86,7 @@ const generateFullFilmDescription = () => {
 
   let randomFilmDescriptionInStrings = [];
 
-  for (let i = 0; i < getRandomInteger(0, 5); i++) {
+  for (let i = 0; i < getRandomInteger(FILM_DESCRIPTION_SENTENCES_MAX); i++) {
     randomFilmDescriptionInStrings.push(filmDescriptionInStrings[Math.floor(Math.random() * filmDescriptionInStrings.length)]);
   }
 
@@ -89,15 +96,15 @@ const generateFullFilmDescription = () => {
 const generateFilmDescription = () => {
   const newFilmDescription = generateFullFilmDescription();
 
-  if (newFilmDescription.length > 140) {
-    return newFilmDescription.slice(0, 139) + `...`;
+  if (newFilmDescription.length > FILM_DESCRIPTION_LENGTH_MAX) {
+    return newFilmDescription.slice(FILM_DESCRIPTION_RENDERED_SIGNS) + `...`;
   }
 
   return newFilmDescription;
 };
 
 const generateFilmRate = () => {
-  return getRandomFractional(0, 10).toFixed(1);
+  return getRandomFractional(FILM_RATE_MAX).toFixed(1);
 };
 
 const generateRandomDate = (start, end) => {
@@ -131,7 +138,7 @@ const generateFilmGenres = () => {
 
   let randomGenres = [];
 
-  for (let i = 0; i < getRandomInteger(0, genres.length); i++) {
+  for (let i = 0; i < getRandomInteger(genres.length); i++) {
     randomGenres.push(shuffledGenres[Math.floor(Math.random() * shuffledGenres.length)]);
   }
 
@@ -153,7 +160,7 @@ const generateComments = (commentsCount) => {
 export const generateFilm = () => {
   return {
     poster: getRandomElement(posters),
-    ageLimit: getRandomInteger(0, 18),
+    ageLimit: getRandomInteger(AGE_LIMIT_MAX),
     title: getRandomElement(films),
     titleOrigin: getRandomElement(films),
     rate: generateFilmRate(),
@@ -167,7 +174,7 @@ export const generateFilm = () => {
     genres: generateFilmGenres(),
     description: generateFilmDescription(),
     fullDescription: generateFullFilmDescription(),
-    comments: generateComments(getRandomInteger(0, 5)),
+    comments: generateComments(getRandomInteger(COMMENTS_COUNT_MAX)),
     isAtWatchlist: Boolean(getRandomInteger()),
     isWatched: Boolean(getRandomInteger()),
     isFavorite: Boolean(getRandomInteger()),
