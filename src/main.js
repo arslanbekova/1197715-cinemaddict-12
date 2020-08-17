@@ -71,6 +71,6 @@ for (let film of films) {
 };
 
 const [, watched] = filters;
-render(siteFooterElement, createFooterStatisticTemplate(watched.count))
+render(siteFooterElement, createFooterStatisticTemplate(watched.count));
 
-// render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
+render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
