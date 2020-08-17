@@ -1,48 +1,58 @@
 import moment from 'moment';
+import {getRandomElement} from "../utils.js";
+import {getRandomInteger} from "../utils.js";
+import {getRandomFractional} from "../utils.js";
 
-const getRandomInteger = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
+const emotions = [
+  `smile`,
+  `sleeping`,
+  `puke`,
+  `angry`,
+];
 
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
-};
+const films = [
+  `The Dance of Life`,
+  `Sagebrush Trail`,
+  `The Man with the Golden Arm`,
+  `Santa Claus Conquers the Martians`,
+  `Popeye the Sailor Meets Sindbad the Sailor`,
+];
 
-const getRandomFractional = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
+const posters = [
+  `/images/posters/made-for-each-other.png`,
+  `/images/posters/popeye-meets-sinbad.png`,
+  `/images/posters/sagebrush-trail.jpg`,
+  `/images/posters/santa-claus-conquers-the-martians.jpg`,
+  `/images/posters/the-dance-of-life.jpg`,
+  `/images/posters/the-great-flamarion.jpg`,
+  `/images/posters/the-man-with-the-golden-arm.jpg`,
+];
 
-  return lower + Math.random() * (upper - lower);
-};
+const directors = [
+  `Quentin Tarantino`,
+  `Christopher Nolan`,
+  `Steven Spielberg`,
+  `Martin Scorsese`,
+  `Stanley Kubrick`,
+  `Alfred Hitchcock`,
+];
 
-const generateFilmTitle = () => {
-  const films = [
-    `The Dance of Life`,
-    `Sagebrush Trail`,
-    `The Man with the Golden Arm`,
-    `Santa Claus Conquers the Martians`,
-    `Popeye the Sailor Meets Sindbad the Sailor`,
-  ];
+const countries = [
+  `USA`,
+  `United Kingdom`,
+  `France`,
+  `Russia`,
+  `India`,
+];
 
-  const randomIndex = getRandomInteger(0, films.length - 1);
-
-  return films[randomIndex];
-};
-
-const generateFilmPoster = () => {
-  const posters = [
-    `/images/posters/made-for-each-other.png`,
-    `/images/posters/popeye-meets-sinbad.png`,
-    `/images/posters/sagebrush-trail.jpg`,
-    `/images/posters/santa-claus-conquers-the-martians.jpg`,
-    `/images/posters/the-dance-of-life.jpg`,
-    `/images/posters/the-great-flamarion.jpg`,
-    `/images/posters/the-man-with-the-golden-arm.jpg`,
-  ];
-
-  const randomIndex = getRandomInteger(0, posters.length - 1);
-
-  return posters[randomIndex];
-};
+const authors = [
+  `Joe`,
+  `Phoebe`,
+  `Monika`,
+  `Rachel`,
+  `Chendler`,
+  `Ross`,
+];
 
 const generateFullFilmDescription = () => {
   const filmDescription = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
@@ -72,21 +82,6 @@ const generateFilmDescription = () => {
 const generateFilmRate = () => {
   const rate = getRandomFractional(0, 10);
   return rate.toFixed(1);
-};
-
-const generateFilmDirector = () => {
-  const directors = [
-    `Quentin Tarantino`,
-    `Christopher Nolan`,
-    `Steven Spielberg`,
-    `Martin Scorsese`,
-    `Stanley Kubrick`,
-    `Alfred Hitchcock`,
-  ];
-
-  const randomIndex = getRandomInteger(0, directors.length - 1);
-
-  return directors[randomIndex];
 };
 
 const generateFilmWriters = () => {
@@ -131,26 +126,8 @@ const generateCommentDate = () => {
   return moment(commentDate).format(`YYYY/MM/DD hh:mm`);
 };
 
-const generateProductionYear = () => {
-  return getRandomInteger(1920, 2000);
-};
-
 const generateFilmDuration = () => {
   return getRandomInteger(1, 3) + `h` + ` ` + getRandomInteger(1, 59) + `m`;
-};
-
-const generateFilmCountry = () => {
-  const countries = [
-    `USA`,
-    `United Kingdom`,
-    `France`,
-    `Russia`,
-    `India`,
-  ];
-
-  const randomIndex = getRandomInteger(0, countries.length - 1);
-
-  return countries[randomIndex];
 };
 
 const generateFilmGenres = () => {
@@ -173,40 +150,12 @@ const generateFilmGenres = () => {
   return randomGenres;
 };
 
-const generateCommentEmotion = () => {
-  const emotions = [
-    `smile`,
-    `sleeping`,
-    `puke`,
-    `angry`,
-  ];
-
-  const randomIndex = getRandomInteger(0, emotions.length - 1);
-
-  return emotions[randomIndex];
-};
-
-const generateCommentAuthor = () => {
-  const authors = [
-    `Joe`,
-    `Phoebe`,
-    `Monika`,
-    `Rachel`,
-    `Chendler`,
-    `Ross`,
-  ];
-
-  const randomIndex = getRandomInteger(0, authors.length - 1);
-
-  return authors[randomIndex];
-};
-
 const generateComments = (commentsCount) => {
   const createComment = () => {
     return {
       text: generateFilmDescription(),
-      emotion: generateCommentEmotion(),
-      author: generateCommentAuthor(),
+      emotion: getRandomElement(emotions),
+      author: getRandomElement(authors),
       date: generateCommentDate(),
     };
   };
@@ -216,18 +165,18 @@ const generateComments = (commentsCount) => {
 
 export const generateFilm = () => {
   return {
-    poster: generateFilmPoster(),
+    poster: getRandomElement(posters),
     ageLimit: getRandomInteger(0, 18),
-    title: generateFilmTitle(),
-    titleOrigin: generateFilmTitle(),
+    title: getRandomElement(films),
+    titleOrigin: getRandomElement(films),
     rate: generateFilmRate(),
-    productionYear: generateProductionYear(),
-    director: generateFilmDirector(),
+    productionYear: getRandomInteger(1920, 2000),
+    director: getRandomElement(directors),
     writers: generateFilmWriters(),
     actors: generateFilmActors(),
     releaseDate: generateReleaseDate(),
     duration: generateFilmDuration(),
-    country: generateFilmCountry(),
+    country: getRandomElement(countries),
     genres: generateFilmGenres(),
     description: generateFilmDescription(),
     fullDescription: generateFullFilmDescription(),
