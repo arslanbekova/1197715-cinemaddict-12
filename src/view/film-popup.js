@@ -15,7 +15,6 @@ export const createFilmPopupTemplate = (popup) => {
     country,
     genres,
     fullDescription,
-    // commentsCount,
     comments,
   } = popup;
 
