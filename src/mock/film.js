@@ -56,8 +56,7 @@ const authors = [
 
 const generateFullFilmDescription = () => {
   const filmDescription = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
-  const period = `.`;
-  const filmDescriptionInStrings = filmDescription.split(period);
+  const filmDescriptionInStrings = filmDescription.split(`.`);
 
   let randomFilmDescriptionInStrings = [];
 
@@ -70,9 +69,8 @@ const generateFullFilmDescription = () => {
 
 const generateFilmDescription = () => {
   const newFilmDescription = generateFullFilmDescription();
-  const newFilmDescriptionLength = newFilmDescription.length;
 
-  if (newFilmDescriptionLength > 140) {
+  if (newFilmDescription.length > 140) {
     return newFilmDescription.slice(0, 139) + `...`;
   }
 
@@ -80,8 +78,7 @@ const generateFilmDescription = () => {
 };
 
 const generateFilmRate = () => {
-  const rate = getRandomFractional(0, 10);
-  return rate.toFixed(1);
+  return getRandomFractional(0, 10).toFixed(1);
 };
 
 const generateFilmWriters = () => {
@@ -159,8 +156,7 @@ const generateComments = (commentsCount) => {
       date: generateCommentDate(),
     };
   };
-  const comments = new Array(commentsCount).fill().map(createComment);
-  return comments;
+  return new Array(commentsCount).fill().map(createComment);
 };
 
 export const generateFilm = () => {
