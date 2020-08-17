@@ -2,6 +2,7 @@ import moment from 'moment';
 import {getRandomElement} from "../utils.js";
 import {getRandomInteger} from "../utils.js";
 import {getRandomFractional} from "../utils.js";
+import {generateRandomList} from "../utils.js";
 
 const emotions = [
   `smile`,
@@ -54,6 +55,24 @@ const authors = [
   `Ross`,
 ];
 
+const writers = [
+  `Heinz Herald`,
+  `Richard Weil`,
+  `Billy Wilder`,
+  `Robert Towne`,
+  `Nora Ephron`,
+];
+
+const actors = [
+  `Erich von Stroheim`,
+  `Mary Beth Hughes`,
+  `Dan Duryea`,
+  `Morgan Freeman`,
+  `Leonardo DiCaprio`,
+  `Robert De Niro`,
+  `Brad Pitt`,
+];
+
 const generateFullFilmDescription = () => {
   const filmDescription = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
   const filmDescriptionInStrings = filmDescription.split(`.`);
@@ -79,34 +98,6 @@ const generateFilmDescription = () => {
 
 const generateFilmRate = () => {
   return getRandomFractional(0, 10).toFixed(1);
-};
-
-const generateFilmWriters = () => {
-  const writers = [
-    `Heinz Herald`,
-    `Richard Weil`,
-    `Billy Wilder`,
-    `Robert Towne`,
-    `Nora Ephron`,
-  ];
-
-  const randomArrayOfWriters = writers.slice(getRandomInteger(0, writers.length - 2));
-  return randomArrayOfWriters.join(`, `);
-};
-
-const generateFilmActors = () => {
-  const actors = [
-    `Erich von Stroheim`,
-    `Mary Beth Hughes`,
-    `Dan Duryea`,
-    `Morgan Freeman`,
-    `Leonardo DiCaprio`,
-    `Robert De Niro`,
-    `Brad Pitt`,
-  ];
-
-  const randomArrayOfActors = actors.slice(getRandomInteger(0, actors.length - 2));
-  return randomArrayOfActors.join(`, `);
 };
 
 const generateRandomDate = (start, end) => {
@@ -168,8 +159,8 @@ export const generateFilm = () => {
     rate: generateFilmRate(),
     productionYear: getRandomInteger(1920, 2000),
     director: getRandomElement(directors),
-    writers: generateFilmWriters(),
-    actors: generateFilmActors(),
+    writers: generateRandomList(writers),
+    actors: generateRandomList(actors),
     releaseDate: generateReleaseDate(),
     duration: generateFilmDuration(),
     country: getRandomElement(countries),

@@ -23,3 +23,16 @@ export const getRandomFractional = (a = 0, b = 1) => {
 
   return lower + Math.random() * (upper - lower);
 };
+
+export const generateRandomList = (data) => {
+
+  const shuffledList = data.sort(() => 0.5 - Math.random());
+
+  let randomList = [];
+
+  for (let i = 0; i < getRandomInteger(data.length); i++) {
+    randomList.push(shuffledList[Math.floor(Math.random() * shuffledList.length)]);
+  }
+
+  return randomList.join(`, `);
+};
