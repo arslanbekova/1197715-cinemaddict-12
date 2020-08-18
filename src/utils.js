@@ -24,15 +24,10 @@ export const getRandomFractional = (a = 0, b = 1) => {
   return lower + Math.random() * (upper - lower);
 };
 
-export const generateRandomList = (data) => {
-
-  const shuffledList = data.sort(() => 0.5 - Math.random());
-
-  let randomList = [];
-
-  for (let i = 0; i < getRandomInteger(data.length); i++) {
-    randomList.push(shuffledList[Math.floor(Math.random() * shuffledList.length)]);
+export const shuffle = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
-
-  return randomList.join(`, `);
+  return array
 };

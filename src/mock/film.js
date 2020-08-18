@@ -2,7 +2,7 @@ import moment from 'moment';
 import {getRandomElement} from "../utils.js";
 import {getRandomInteger} from "../utils.js";
 import {getRandomFractional} from "../utils.js";
-import {generateRandomList} from "../utils.js";
+import {shuffle} from "../utils.js";
 
 const FILM_RATE_MAX = 10;
 const AGE_LIMIT_MAX = 18;
@@ -10,6 +10,8 @@ const COMMENTS_COUNT_MAX = 5;
 const FILM_DESCRIPTION_SENTENCES_MAX = 5;
 const FILM_DESCRIPTION_LENGTH_MAX = 140;
 const FILM_DESCRIPTION_RENDERED_SIGNS = 139;
+const START_FILM_DATE = 1920;
+const FINISH_FILM_DATE = 2000;
 
 const emotions = [
   `smile`,
@@ -24,6 +26,14 @@ const films = [
   `The Man with the Golden Arm`,
   `Santa Claus Conquers the Martians`,
   `Popeye the Sailor Meets Sindbad the Sailor`,
+];
+
+const genres = [
+  `Musical`,
+  `Comedy`,
+  `Drama`,
+  `Adventure`,
+  `Detective`,
 ];
 
 const posters = [
@@ -81,23 +91,17 @@ const actors = [
 ];
 
 const generateFullFilmDescription = () => {
-  const filmDescription = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
+  const filmDescription = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus`;
   const filmDescriptionInStrings = filmDescription.split(`.`);
 
-  let randomFilmDescriptionInStrings = [];
-
-  for (let i = 0; i < getRandomInteger(FILM_DESCRIPTION_SENTENCES_MAX); i++) {
-    randomFilmDescriptionInStrings.push(filmDescriptionInStrings[Math.floor(Math.random() * filmDescriptionInStrings.length)]);
-  }
-
-  return randomFilmDescriptionInStrings.join(`.`);
+  return shuffle(filmDescriptionInStrings).slice(0, getRandomInteger(FILM_DESCRIPTION_SENTENCES_MAX)).join(`. `);
 };
 
 const generateFilmDescription = () => {
   const newFilmDescription = generateFullFilmDescription();
 
   if (newFilmDescription.length > FILM_DESCRIPTION_LENGTH_MAX) {
-    return newFilmDescription.slice(FILM_DESCRIPTION_RENDERED_SIGNS) + `...`;
+    return newFilmDescription.slice(0, FILM_DESCRIPTION_RENDERED_SIGNS) + `...`;
   }
 
   return newFilmDescription;
@@ -125,26 +129,6 @@ const generateFilmDuration = () => {
   return getRandomInteger(1, 3) + `h` + ` ` + getRandomInteger(1, 59) + `m`;
 };
 
-const generateFilmGenres = () => {
-  const genres = [
-    `Musical`,
-    `Comedy`,
-    `Drama`,
-    `Adventure`,
-    `Detective`,
-  ];
-
-  const shuffledGenres = genres.sort(() => 0.5 - Math.random());
-
-  let randomGenres = [];
-
-  for (let i = 0; i < getRandomInteger(genres.length); i++) {
-    randomGenres.push(shuffledGenres[Math.floor(Math.random() * shuffledGenres.length)]);
-  }
-
-  return randomGenres;
-};
-
 const generateComments = (commentsCount) => {
   const createComment = () => {
     return {
@@ -164,14 +148,14 @@ export const generateFilm = () => {
     title: getRandomElement(films),
     titleOrigin: getRandomElement(films),
     rate: generateFilmRate(),
-    productionYear: getRandomInteger(1920, 2000),
+    productionYear: getRandomInteger(START_FILM_DATE, FINISH_FILM_DATE),
     director: getRandomElement(directors),
-    writers: generateRandomList(writers),
-    actors: generateRandomList(actors),
+    writers: shuffle(writers).join(`, `),
+    actors: shuffle(actors).join(`, `),
     releaseDate: generateReleaseDate(),
     duration: generateFilmDuration(),
     country: getRandomElement(countries),
-    genres: generateFilmGenres(),
+    genres: shuffle(genres).slice(getRandomInteger(0, genres.length - 1)),
     description: generateFilmDescription(),
     fullDescription: generateFullFilmDescription(),
     comments: generateComments(getRandomInteger(COMMENTS_COUNT_MAX)),
