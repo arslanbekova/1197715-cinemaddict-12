@@ -1,12 +1,12 @@
-import {createUserRankTemplate} from "./view/user-rank.js";
-import {createSiteMenuTemplate} from "./view/site-menu.js";
-import {createSortListTemplate} from "./view/sort.js";
-import {createContentSectionTemplate} from "./view/content-section.js";
-import {createFilmCardTemplate} from "./view/film-card.js";
-import {createShowMoreButtonTemplate} from "./view/show-more-button.js";
-import {createFooterStatisticTemplate} from "./view/footer-statistic.js";
-import {createFilmPopupTemplate} from "./view/film-popup.js";
-import {render} from "./utils.js";
+import UserRank from "./view/user-rank.js";
+import SiteMenu from "./view/site-menu.js";
+import SortList from "./view/sort.js";
+import ContentSection from "./view/content-section.js";
+import FilmCard from "./view/film-card.js";
+import ShowMoreButton from "./view/show-more-button.js";
+import FooterStatistic from "./view/footer-statistic.js";
+import FilmPopup from "./view/film-popup.js";
+import {renderTemplate, renderElement} from "./utils.js";
 import {generateFilm} from "./mock/film.js";
 import {generateUserRank} from "./mock/user-rank.js";
 import {generateSiteMenuFilters} from "./mock/site-menu.js";
@@ -23,10 +23,10 @@ const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 const siteFooterElement = document.querySelector(`.footer`);
 
-render(siteHeaderElement, createUserRankTemplate(generateUserRank(filters)));
-render(siteMainElement, createSiteMenuTemplate(filters));
-render(siteMainElement, createSortListTemplate());
-render(siteMainElement, createContentSectionTemplate());
+renderElement(siteHeaderElement, new UserRank(generateUserRank(filters)).getElement());
+renderElement(siteMainElement, new SiteMenu(filters).getElement());
+renderElement(siteMainElement, new SortList().getElement());
+renderElement(siteMainElement, new ContentSection().getElement());
 
 const filmsElement = siteMainElement.querySelector(`.films`);
 const allFilmsListElement = filmsElement.querySelector(`.films-list`);
@@ -34,13 +34,13 @@ const allFilmsCardsContainerElement = allFilmsListElement.querySelector(`.films-
 
 for (let film of films) {
   if (films.indexOf(film) >= MAX_NUMBER_ALL_FILMS_RENDERED_CARDS) break;
-  render(allFilmsCardsContainerElement, createFilmCardTemplate(film));
+  renderElement(allFilmsCardsContainerElement, new FilmCard(film).getElement());
 };
 
 if (films.length > ALL_FILMS_RENDERED_CARDS_PER_STEP) {
   let renderedFilms = ALL_FILMS_RENDERED_CARDS_PER_STEP;
 
-  render(allFilmsListElement, createShowMoreButtonTemplate());
+  renderElement(allFilmsListElement, new ShowMoreButton().getElement());
 
   const showMoreButton = allFilmsListElement.querySelector(`.films-list__show-more`);
 
@@ -49,7 +49,7 @@ if (films.length > ALL_FILMS_RENDERED_CARDS_PER_STEP) {
 
     films
       .slice(renderedFilms, renderedFilms + ALL_FILMS_RENDERED_CARDS_PER_STEP)
-      .forEach((film) => render(allFilmsCardsContainerElement, createFilmCardTemplate(film)));
+      .forEach((film) => renderTemplate(allFilmsCardsContainerElement, createFilmCardTemplate(film)));
 
     renderedFilms += ALL_FILMS_RENDERED_CARDS_PER_STEP;
 
@@ -66,11 +66,11 @@ const mostCommentedFilmsCardsContainerElement = mostCommentedFilmsListElement.qu
 
 for (let film of films) {
   if (films.indexOf(film) >= MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS) break;
-  render(topRatedFilmsCardsContainerElement, createFilmCardTemplate(film));
-  render(mostCommentedFilmsCardsContainerElement, createFilmCardTemplate(film));
+  renderElement(topRatedFilmsCardsContainerElement, new FilmCard(film).getElement());
+  renderElement(mostCommentedFilmsCardsContainerElement, new FilmCard(film).getElement());
 };
 
 const [, watched] = filters;
-render(siteFooterElement, createFooterStatisticTemplate(watched.count));
+renderElement(siteFooterElement, new FooterStatistic(watched.count).getElement());
 
-render(siteFooterElement, createFilmPopupTemplate(films[0]), `afterend`);
+renderElement(siteFooterElement, new FilmPopup(films[0]).getElement(), `afterend`);
