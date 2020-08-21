@@ -2,7 +2,7 @@ export const renderTemplate = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
 
-export const renderElement = (container, element, place = `beforeend`) => {
+export const render = (container, element, place = `beforeend`) => {
   switch (place) {
     case `afterend`:
       container.prepend(element);
