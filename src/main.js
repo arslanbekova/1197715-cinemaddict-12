@@ -1,6 +1,6 @@
 import UserRank from "./view/user-rank.js";
 import SiteMenu from "./view/site-menu.js";
-import SortList from "./view/sort.js";
+import SortList from "./view/sort-list.js";
 import ContentSection from "./view/content-section.js";
 import FilmCard from "./view/film-card.js";
 import ShowMoreButton from "./view/show-more-button.js";
@@ -57,8 +57,7 @@ const renderFilmCard = (container, film) => {
 };
 
 
-for (let film of films) {
-  if (films.indexOf(film) >= MAX_NUMBER_ALL_FILMS_RENDERED_CARDS) break;
+for (let film of films.slice(0, MAX_NUMBER_ALL_FILMS_RENDERED_CARDS)) {
   renderFilmCard(allFilmsCardsContainerElement, film);
 };
 
