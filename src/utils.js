@@ -49,3 +49,10 @@ export const shuffle = (array) => {
   }
   return array
 };
+
+export const isEscEvent = (evt, action) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    action();
+  }
+};
