@@ -43,10 +43,12 @@ const renderFilmCard = (container, film) => {
 
   const onFilmCardElementClick = () => {
     container.appendChild(filmPopupComponent.getElement());
+    document.addEventListener(`keydown`, onPopupCloseBtnEscPress);
   };
 
   const popupClose = () => {
     container.removeChild(filmPopupComponent.getElement());
+    document.removeEventListener(`keydown`, onPopupCloseBtnEscPress);
   }
 
   const onPopupCloseBtnClick = () => {
@@ -61,7 +63,6 @@ const renderFilmCard = (container, film) => {
   filmCardPoster.addEventListener(`click`, onFilmCardElementClick);
   filmCardComments.addEventListener(`click`, onFilmCardElementClick);
   popupCloseBtn.addEventListener(`click`, onPopupCloseBtnClick);
-  document.addEventListener(`keydown`, onPopupCloseBtnEscPress);
 
   render(container, filmCardComponent.getElement());
 };
