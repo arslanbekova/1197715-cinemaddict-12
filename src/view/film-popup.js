@@ -1,4 +1,4 @@
-import {getTemplate} from "../utils.js";
+import {getTemplateWithNewData} from "../utils/templates.js";
 import Abstract from "./abstract.js";
 
 const createFilmPopupTemplate = (popup) => {
@@ -105,7 +105,7 @@ const createFilmPopupTemplate = (popup) => {
                 <tr class="film-details__row">
                   <td class="film-details__term">${getGenreWordForm()}</td>
                   <td class="film-details__cell">
-                    ${getTemplate(genres, createFilmGenresTemplate)}
+                    ${getTemplateWithNewData(genres, createFilmGenresTemplate)}
                   </td>
                 </tr>
               </table>
@@ -132,7 +132,7 @@ const createFilmPopupTemplate = (popup) => {
             <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
             <ul class="film-details__comments-list">
-              ${getTemplate(comments, createFilmCommentTemplate)}
+              ${getTemplateWithNewData(comments, createFilmCommentTemplate)}
             </ul>
 
             <div class="film-details__new-comment">

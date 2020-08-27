@@ -1,29 +1,3 @@
-export const renderTemplate = (container, template, place = `beforeend`) => {
-  container.insertAdjacentHTML(place, template);
-};
-
-export const render = (container, element, place = `beforeend`) => {
-  switch (place) {
-    case `afterend`:
-      container.prepend(element);
-      break;
-    case `beforeend`:
-      container.append(element);
-      break;
-  }
-};
-
-export const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template;
-
-  return newElement.firstChild;
-};
-
-export const getTemplate = (data, template) => {
-  return data.map((item) => template(item)).join(``);
-};
-
 export const getRandomElement = (array) => {
   return array[Math.floor(Math.random() * Math.floor(array.length))];
 };
@@ -47,11 +21,11 @@ export const shuffle = (array) => {
     let j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-  return array
+  return array;
 };
 
 export const isEscEvent = (evt, action) => {
-  if (evt.key === 'Escape') {
+  if (evt.key === `Escape`) {
     evt.preventDefault();
     action();
   }

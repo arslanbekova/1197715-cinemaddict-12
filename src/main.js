@@ -7,7 +7,8 @@ import ShowMoreButton from "./view/show-more-button.js";
 import FooterStatistic from "./view/footer-statistic.js";
 import FilmPopup from "./view/film-popup.js";
 import noFilms from "./view/no-films.js"
-import {render, isEscEvent} from "./utils.js";
+import {render} from "./utils/render.js";
+import {isEscEvent} from "./utils/general.js";
 import {generateFilm} from "./mock/film.js";
 import {generateUserRank} from "./mock/user-rank.js";
 import {generateSiteMenuFilters} from "./mock/site-menu.js";

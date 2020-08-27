@@ -1,8 +1,10 @@
 import moment from 'moment';
-import {getRandomElement} from "../utils.js";
-import {getRandomInteger} from "../utils.js";
-import {getRandomFractional} from "../utils.js";
-import {shuffle} from "../utils.js";
+import {
+  getRandomElement,
+  getRandomInteger,
+  getRandomFractional,
+  shuffle
+} from "../utils/general.js";
 
 const FILM_RATE_MAX = 10;
 const AGE_LIMIT_MAX = 18;
