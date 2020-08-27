@@ -37,9 +37,22 @@ export default class FilmCard extends Abstract {
   constructor(film) {
     super();
     this._film = film;
+    this._onFilmCardElementClick = this._onFilmCardElementClick.bind(this);
   }
 
   getTemplate() {
     return createFilmCardTemplate(this._film);
+  }
+
+  _onFilmCardElementClick(evt) {
+    evt.preventDefault();
+    this._callback.onFilmCardElementClick();
+  }
+
+  setOnFilmCardElementClick(callback) {
+    this._callback.onFilmCardElementClick = callback;
+    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, this._onFilmCardElementClick);
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, this._onFilmCardElementClick);
+    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, this._onFilmCardElementClick);
   }
 }

@@ -7,8 +7,21 @@ const createShowMoreButtonTemplate = () => {
 };
 
 export default class ShowMoreButton extends Abstract {
-
+  constructor() {
+    super();
+    this._onShowMoreButtonClick = this._onShowMoreButtonClick.bind(this);
+  }
   getTemplate() {
     return createShowMoreButtonTemplate();
+  }
+
+  _onShowMoreButtonClick(evt) {
+    evt.preventDefault();
+    this._callback.click();
+  }
+
+  setOnShowMoreButtonClick(callback) {
+    this._callback.click = callback;
+    this.getElement().addEventListener(`click`, this._onShowMoreButtonClick);
   }
 }
