@@ -1,5 +1,5 @@
-import {getTemplate} from "../utils.js";
-import {createElement} from "../utils.js";
+import {getTemplateWithNewData} from "../utils/templates.js";
+import Abstract from "./abstract.js";
 
 const createFilmPopupTemplate = (popup) => {
   const {
@@ -105,7 +105,7 @@ const createFilmPopupTemplate = (popup) => {
                 <tr class="film-details__row">
                   <td class="film-details__term">${getGenreWordForm()}</td>
                   <td class="film-details__cell">
-                    ${getTemplate(genres, createFilmGenresTemplate)}
+                    ${getTemplateWithNewData(genres, createFilmGenresTemplate)}
                   </td>
                 </tr>
               </table>
@@ -132,7 +132,7 @@ const createFilmPopupTemplate = (popup) => {
             <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
             <ul class="film-details__comments-list">
-              ${getTemplate(comments, createFilmCommentTemplate)}
+              ${getTemplateWithNewData(comments, createFilmCommentTemplate)}
             </ul>
 
             <div class="film-details__new-comment">
@@ -171,25 +171,24 @@ const createFilmPopupTemplate = (popup) => {
   );
 };
 
-export default class FilmPopup {
+export default class FilmPopup extends Abstract {
   constructor(film) {
-    this._element = null;
+    super();
     this._film = film;
+    this._onPopupCloseBtnClick = this._onPopupCloseBtnClick.bind(this);
   }
 
   getTemplate() {
     return createFilmPopupTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _onPopupCloseBtnClick(evt) {
+    evt.preventDefault();
+    this._callback.onPopupCloseBtnClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setOnPopupCloseBtnClick(callback) {
+    this._callback.onPopupCloseBtnClick = callback;
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._onPopupCloseBtnClick);
   }
 }

@@ -1,0 +1,126 @@
+import SortList from "../view/sort-list.js";
+import ContentSection from "../view/content-section.js";
+import TopRatedFilms from "../view/top-rated-films.js";
+import MostCommentedFilms from "../view/most-commented-films.js";
+import FilmCard from "../view/film-card.js";
+import ShowMoreButton from "../view/show-more-button.js";
+import FilmPopup from "../view/film-popup.js";
+import NoFilms from "../view/no-films.js";
+
+import {render, remove} from "../utils/render.js";
+import {isEscEvent} from "../utils/general.js";
+import {
+  MAX_NUMBER_ALL_FILMS_RENDERED_CARDS,
+  ALL_FILMS_RENDERED_CARDS_PER_STEP,
+  MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS
+} from "../utils/consts.js";
+
+export default class FilmsList {
+  constructor(filmsContainer) {
+    this._filmsContainer = filmsContainer;
+
+    this._sortListComponent = new SortList();
+    this._contentSectionComponent = new ContentSection();
+    this._topRatedFilmsComponent = new TopRatedFilms();
+    this._mostCommentedFilmsComponent = new MostCommentedFilms();
+    this._showMoreButtonComponent = new ShowMoreButton();
+    this._noFilmsComponent = new NoFilms();
+
+    this._allFilmsContainerElement = this._contentSectionComponent.getElement().querySelector(`.films-list__container`);
+  }
+
+  init(films) {
+    this._films = films;
+    this._renderFilmsList(this._films);
+  }
+
+  _renderSortList() {
+    render(this._filmsContainer, this._sortListComponent);
+  }
+
+  _renderContentSection() {
+    render(this._filmsContainer, this._contentSectionComponent);
+  }
+
+  _renderFilmCard(film, container) {
+    const filmCardComponent = new FilmCard(film);
+    const filmPopupComponent = new FilmPopup(film);
+
+    const onPopupCloseBtnEscPress = (evt) => {
+      isEscEvent(evt, popupClose);
+    };
+
+    const popupOpen = () => {
+      render(this._filmsContainer, filmPopupComponent);
+      document.addEventListener(`keydown`, onPopupCloseBtnEscPress);
+      filmPopupComponent.setOnPopupCloseBtnClick(popupClose);
+    };
+
+    const popupClose = () => {
+      remove(filmPopupComponent);
+      document.removeEventListener(`keydown`, onPopupCloseBtnEscPress);
+    };
+
+    filmCardComponent.setOnFilmCardElementClick(popupOpen);
+    render(container, filmCardComponent);
+  }
+
+  _renderShowMoreButton(films) {
+    if (films.length > ALL_FILMS_RENDERED_CARDS_PER_STEP) {
+      let renderedFilms = ALL_FILMS_RENDERED_CARDS_PER_STEP;
+      const allFilmsListElement = this._contentSectionComponent.getElement().querySelector(`.films-list`);
+
+      render(allFilmsListElement, this._showMoreButtonComponent);
+
+      const showMoreFilms = () => {
+        films
+          .slice(renderedFilms, renderedFilms + ALL_FILMS_RENDERED_CARDS_PER_STEP)
+          .forEach((film) => this._renderFilmCard(film, this._allFilmsContainerElement));
+
+        renderedFilms += ALL_FILMS_RENDERED_CARDS_PER_STEP;
+
+        if (renderedFilms >= films.length) {
+          remove(this._showMoreButtonComponent);
+        }
+      };
+
+      this._showMoreButtonComponent.setOnShowMoreButtonClick(showMoreFilms);
+    }
+  }
+
+  _renderNoFilms() {
+    render(this._filmsContainer, this._noFilmsComponent);
+  }
+
+  _renderAllFilmsList(films) {
+    for (let film of films.slice(0, MAX_NUMBER_ALL_FILMS_RENDERED_CARDS)) {
+      this._renderFilmCard(film, this._allFilmsContainerElement);
+    }
+  }
+
+  _renderExtraFilmsLists(films) {
+    const contentSectionElement = this._contentSectionComponent.getElement();
+    const topRatedFilmsContainerElement = this._topRatedFilmsComponent.getElement().querySelector(`.films-list__container`);
+    const mostCommentedFilmsContainerElement = this._mostCommentedFilmsComponent.getElement().querySelector(`.films-list__container`);
+
+    render(contentSectionElement, this._topRatedFilmsComponent);
+    render(contentSectionElement, this._mostCommentedFilmsComponent);
+
+    for (let film of films.slice(0, MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS)) {
+      this._renderFilmCard(film, topRatedFilmsContainerElement);
+      this._renderFilmCard(film, mostCommentedFilmsContainerElement);
+    }
+  }
+
+  _renderFilmsList(films) {
+    this._renderSortList();
+    if (films.length === 0) {
+      this._renderNoFilms();
+    } else {
+      this._renderContentSection();
+      this._renderAllFilmsList(films);
+      this._renderShowMoreButton(films);
+      this._renderExtraFilmsLists(films);
+    }
+  }
+}
