@@ -15,7 +15,6 @@ import {
   MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS,
   SortType,
 } from "../utils/consts.js";
-// import {sortFilmsDateDown} from "../utils/general.js";
 
 export default class FilmsList {
   constructor(filmsContainer) {
