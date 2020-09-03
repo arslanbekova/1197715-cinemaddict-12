@@ -12,7 +12,8 @@ import {isEscEvent} from "../utils/general.js";
 import {
   MAX_NUMBER_ALL_FILMS_RENDERED_CARDS,
   ALL_FILMS_RENDERED_CARDS_PER_STEP,
-  MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS
+  MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS,
+  SortType,
 } from "../utils/consts.js";
 
 export default class FilmsList {
@@ -27,15 +28,47 @@ export default class FilmsList {
     this._noFilmsComponent = new NoFilms();
 
     this._allFilmsContainerElement = this._contentSectionComponent.getElement().querySelector(`.films-list__container`);
+
+    this._clickSortTypeElement = this._clickSortTypeElement.bind(this);
+
+    this._currentSortType = SortType.DEFAULT;
   }
 
   init(films) {
     this._films = films;
+    this._sourcedFilms = films.slice();
+
     this._renderFilmsList(this._films);
   }
 
   _renderSortList() {
     render(this._filmsContainer, this._sortListComponent);
+    this._sortListComponent.setOnSortTypeElementClick(this._clickSortTypeElement);
+  }
+
+  _clickSortTypeElement(sortType) {
+    if (this._currentSortType === sortType) {
+      return;
+    }
+    this._sortFilms(sortType);
+    this._clearAllFilmsList();
+    this._renderAllFilmsList(this._films);
+    this._renderShowMoreButton(this._films);
+  }
+
+  _sortFilms(sortType) {
+    this._currentSortType = sortType;
+
+    switch (sortType) {
+      case SortType.DATE:
+        this._films.sort((a, b) => b.productionYear - a.productionYear);
+        break;
+      case SortType.RATE:
+        this._films.sort((a, b) => b.rate - a.rate);
+        break;
+      default:
+        this._films = this._sourcedFilms.slice();
+    }
   }
 
   _renderContentSection() {
@@ -96,6 +129,10 @@ export default class FilmsList {
     for (let film of films.slice(0, MAX_NUMBER_ALL_FILMS_RENDERED_CARDS)) {
       this._renderFilmCard(film, this._allFilmsContainerElement);
     }
+  }
+
+  _clearAllFilmsList() {
+    this._allFilmsContainerElement.innerHTML = ``;
   }
 
   _renderExtraFilmsLists(films) {
