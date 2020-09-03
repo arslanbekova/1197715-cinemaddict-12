@@ -53,6 +53,7 @@ export default class FilmsList {
     this._sortFilms(sortType);
     this._clearAllFilmsList();
     this._renderAllFilmsList(this._films);
+    this._renderShowMoreButton(this._films);
   }
 
   _sortFilms(sortType) {
