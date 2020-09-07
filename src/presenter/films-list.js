@@ -2,13 +2,11 @@ import SortList from "../view/sort-list.js";
 import ContentSection from "../view/content-section.js";
 import TopRatedFilms from "../view/top-rated-films.js";
 import MostCommentedFilms from "../view/most-commented-films.js";
-import FilmCard from "../view/film-card.js";
 import ShowMoreButton from "../view/show-more-button.js";
-import FilmPopup from "../view/film-popup.js";
 import NoFilms from "../view/no-films.js";
+import FilmPopupPresenter from "./film-popup-presenter.js";
 
 import {render, remove} from "../utils/render.js";
-import {isEscEvent} from "../utils/general.js";
 import {
   MAX_NUMBER_ALL_FILMS_RENDERED_CARDS,
   ALL_FILMS_RENDERED_CARDS_PER_STEP,
@@ -76,26 +74,8 @@ export default class FilmsList {
   }
 
   _renderFilmCard(film, container) {
-    const filmCardComponent = new FilmCard(film);
-    const filmPopupComponent = new FilmPopup(film);
-
-    const onPopupCloseBtnEscPress = (evt) => {
-      isEscEvent(evt, popupClose);
-    };
-
-    const popupOpen = () => {
-      render(this._filmsContainer, filmPopupComponent);
-      document.addEventListener(`keydown`, onPopupCloseBtnEscPress);
-      filmPopupComponent.setOnPopupCloseBtnClick(popupClose);
-    };
-
-    const popupClose = () => {
-      remove(filmPopupComponent);
-      document.removeEventListener(`keydown`, onPopupCloseBtnEscPress);
-    };
-
-    filmCardComponent.setOnFilmCardElementClick(popupOpen);
-    render(container, filmCardComponent);
+    const filmPopup = new FilmPopupPresenter(container);
+    filmPopup.init(film);
   }
 
   _renderShowMoreButton(films) {
