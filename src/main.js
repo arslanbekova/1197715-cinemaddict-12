@@ -24,3 +24,4 @@ filmsList.init(films);
 
 const [, watched] = filters;
 render(siteFooterElement, new FooterStatistic(watched.count));
+
