@@ -143,8 +143,11 @@ const generateComments = (commentsCount) => {
   return new Array(commentsCount).fill().map(createComment);
 };
 
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
+
 export const generateFilm = () => {
   return {
+    id: generateId(),
     poster: getRandomElement(posters),
     ageLimit: getRandomInteger(AGE_LIMIT_MAX),
     title: getRandomElement(films),

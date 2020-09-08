@@ -191,4 +191,34 @@ export default class FilmPopup extends Abstract {
     this._callback.onPopupCloseBtnClick = callback;
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._onPopupCloseBtnClick);
   }
+
+  _onControlWatchlistClick(evt) {
+    evt.preventDefault();
+    this._callback.onControlWatchlistClick();
+  }
+
+  setOnControlWatchlistClick(callback) {
+    this._callback.onControlWatchlistClick = callback;
+    this.getElement().getElementById(`watchlist`).addEventListener(`click`, this._onControlWatchlistClick);
+  }
+
+  _onControlWatchedClick(evt) {
+    evt.preventDefault();
+    this._callback.onControlWatchedClick();
+  }
+
+  setOnControlWatchedClick(callback) {
+    this._callback.onControlWatchedClick = callback;
+    this.getElement().getElementById(`watched`).addEventListener(`click`, this._onControlWatchedClick);
+  }
+
+  _onControlFavoriteClick(evt) {
+    evt.preventDefault();
+    this._callback.onControlFavoriteClick();
+  }
+
+  setOnControlFavoriteClick(callback) {
+    this._callback.onControlFavoriteClick = callback;
+    this.getElement().getElementById(`favorite`).addEventListener(`click `, this._onControlFavoriteClick);
+  }
 }

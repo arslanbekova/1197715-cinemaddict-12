@@ -13,6 +13,8 @@ import {
   MAX_NUMBER_EXTRA_FILMS_RENDERED_CARDS,
   SortType,
 } from "../utils/consts.js";
+import {updateItem} from "../utils/general.js";
+
 
 export default class FilmsList {
   constructor(filmsContainer) {
@@ -28,8 +30,10 @@ export default class FilmsList {
     this._allFilmsContainerElement = this._contentSectionComponent.getElement().querySelector(`.films-list__container`);
 
     this._clickSortTypeElement = this._clickSortTypeElement.bind(this);
+    this._handleFilmChange = this._handleFilmChange.bind(this);
 
     this._currentSortType = SortType.DEFAULT;
+    this._filmPopup = {};
   }
 
   init(films) {
@@ -38,6 +42,13 @@ export default class FilmsList {
 
     this._renderFilmsList(this._films);
   }
+
+  _handleFilmChange(updatedFilm) {
+    this._films = updateItem(this._films, updatedFilm);
+    this._sourcedFilms = updateItem(this._sourcedFilms, updatedFilm);
+    this._filmPopup[updatedFilm.id].init(updatedFilm);
+  }
+
 
   _renderSortList() {
     render(this._filmsContainer, this._sortListComponent);
@@ -74,8 +85,9 @@ export default class FilmsList {
   }
 
   _renderFilmCard(film, container) {
-    const filmPopup = new FilmPopupPresenter(container);
+    const filmPopup = new FilmPopupPresenter(container, this._handleFilmChange);
     filmPopup.init(film);
+    this._filmPopup[film.id] = filmPopup;
   }
 
   _renderShowMoreButton(films) {
