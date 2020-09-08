@@ -1,12 +1,12 @@
-import {render, remove} from "../utils/render.js";
+import {render, remove, replace} from "../utils/render.js";
 import {isEscEvent} from "../utils/general.js";
 import FilmCard from "../view/film-card.js";
 import FilmPopup from "../view/film-popup.js";
 
 export default class FilmPopupPresenter {
-  constructor(filmsContainer, changedData) {
+  constructor(filmsContainer, changeData) {
     this._filmsContainer = filmsContainer;
-    this._changedData = changedData;
+    this._changeData = changeData;
 
     this._filmCardComponent = null;
     this._filmPopupComponent = null;
@@ -22,6 +22,8 @@ export default class FilmPopupPresenter {
 
   init(film) {
     this._film = film;
+    const prevFilmCardComponent = this._filmCardComponent;
+    const prevFilmPopupComponent = this._filmPopupComponent;
 
     this._filmCardComponent = new FilmCard(this._film);
     this._filmPopupComponent = new FilmPopup(this._film);
@@ -36,7 +38,21 @@ export default class FilmPopupPresenter {
     this._filmPopupComponent.setOnControlWatchedClick(this._onControlWatchedClick);
     this._filmPopupComponent.setOnControlFavoriteClick(this._onControlFavoriteClick);
 
-    render(this._filmsContainer, this._filmCardComponent);
+    if (prevFilmCardComponent === null || prevFilmPopupComponent === null) {
+      render(this._filmsContainer, this._filmCardComponent);
+      return
+    };
+
+    if (this._filmsContainer.contains(prevFilmCardComponent.getElement())) {
+      replace(this._filmCardComponent, prevFilmCardComponent);
+    }
+
+    if (this._filmsContainer.contains(prevFilmPopupComponent.getElement())) {
+      replace(this._filmPopupComponent, prevFilmPopupComponent);
+    }
+
+    remove(prevFilmCardComponent);
+    remove(prevFilmPopupComponent);
   }
 
   _closeFilmPopup() {
@@ -57,7 +73,7 @@ export default class FilmPopupPresenter {
   }
 
   _onControlWatchlistClick() {
-    this._changedData(
+    this._changeData(
         Object.assign(
             {},
             this._film,
@@ -66,7 +82,7 @@ export default class FilmPopupPresenter {
     );
   }
   _onControlWatchedClick() {
-    this._changedData(
+    this._changeData(
         Object.assign(
             {},
             this._film,
@@ -75,7 +91,7 @@ export default class FilmPopupPresenter {
     );
   }
   _onControlFavoriteClick() {
-    this._changedData(
+    this._changeData(
         Object.assign(
             {},
             this._film,
