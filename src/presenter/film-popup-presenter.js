@@ -14,6 +14,7 @@ export default class FilmPopupPresenter {
     this._onPopupCloseBtnEscPress = this._onPopupCloseBtnEscPress.bind(this);
     this._closeFilmPopup = this._closeFilmPopup.bind(this);
     this._openFilmPopup = this._openFilmPopup.bind(this);
+
     this._onControlWatchlistClick = this._onControlWatchlistClick.bind(this);
     this._onControlWatchedClick = this._onControlWatchedClick.bind(this);
     this._onControlFavoriteClick = this._onControlFavoriteClick.bind(this);
@@ -21,6 +22,7 @@ export default class FilmPopupPresenter {
 
   init(film) {
     this._film = film;
+
     this._filmCardComponent = new FilmCard(this._film);
     this._filmPopupComponent = new FilmPopup(this._film);
 
@@ -29,6 +31,10 @@ export default class FilmPopupPresenter {
     this._filmCardComponent.setOnControlWatchlistClick(this._onControlWatchlistClick);
     this._filmCardComponent.setOnControlWatchedClick(this._onControlWatchedClick);
     this._filmCardComponent.setOnControlFavoriteClick(this._onControlFavoriteClick);
+
+    this._filmPopupComponent.setOnControlWatchlistClick(this._onControlWatchlistClick);
+    this._filmPopupComponent.setOnControlWatchedClick(this._onControlWatchedClick);
+    this._filmPopupComponent.setOnControlFavoriteClick(this._onControlFavoriteClick);
 
     render(this._filmsContainer, this._filmCardComponent);
   }

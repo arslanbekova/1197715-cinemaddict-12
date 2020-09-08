@@ -1,5 +1,5 @@
 import {getTemplateWithNewData} from "../utils/templates.js";
-import Abstract from "./abstract.js";
+import Smart from "./smart.js";
 
 const createFilmPopupTemplate = (popup) => {
   const {
@@ -171,15 +171,21 @@ const createFilmPopupTemplate = (popup) => {
   );
 };
 
-export default class FilmPopup extends Abstract {
+export default class FilmPopup extends Smart {
   constructor(film) {
     super();
     this._film = film;
     this._onPopupCloseBtnClick = this._onPopupCloseBtnClick.bind(this);
+    this._onControlWatchlistClick = this._onControlWatchlistClick.bind(this);
+    this._onControlWatchedClick = this._onControlWatchedClick.bind(this);
+    this._onControlFavoriteClick = this._onControlFavoriteClick.bind(this);
   }
 
   getTemplate() {
     return createFilmPopupTemplate(this._film);
+  }
+
+  restoreHandlers() {
   }
 
   _onPopupCloseBtnClick(evt) {
@@ -199,7 +205,7 @@ export default class FilmPopup extends Abstract {
 
   setOnControlWatchlistClick(callback) {
     this._callback.onControlWatchlistClick = callback;
-    this.getElement().getElementById(`watchlist`).addEventListener(`click`, this._onControlWatchlistClick);
+    this.getElement().querySelector(`#watchlist`).addEventListener(`click`, this._onControlWatchlistClick);
   }
 
   _onControlWatchedClick(evt) {
@@ -209,7 +215,7 @@ export default class FilmPopup extends Abstract {
 
   setOnControlWatchedClick(callback) {
     this._callback.onControlWatchedClick = callback;
-    this.getElement().getElementById(`watched`).addEventListener(`click`, this._onControlWatchedClick);
+    this.getElement().querySelector(`#watched`).addEventListener(`click`, this._onControlWatchedClick);
   }
 
   _onControlFavoriteClick(evt) {
@@ -219,6 +225,6 @@ export default class FilmPopup extends Abstract {
 
   setOnControlFavoriteClick(callback) {
     this._callback.onControlFavoriteClick = callback;
-    this.getElement().getElementById(`favorite`).addEventListener(`click `, this._onControlFavoriteClick);
+    this.getElement().querySelector(`#favorite`).addEventListener(`click `, this._onControlFavoriteClick);
   }
 }
