@@ -29,6 +29,7 @@ export default class FilmPopupPresenter {
     this._filmPopupComponent = new FilmPopup(this._film);
 
     this._filmCardComponent.setOnFilmCardElementClick(this._openFilmPopup);
+    this._filmPopupComponent.setOnPopupCloseBtnClick(this._closeFilmPopup);
 
     this._filmCardComponent.setOnControlWatchlistClick(this._onControlWatchlistClick);
     this._filmCardComponent.setOnControlWatchedClick(this._onControlWatchedClick);
@@ -40,8 +41,8 @@ export default class FilmPopupPresenter {
 
     if (prevFilmCardComponent === null || prevFilmPopupComponent === null) {
       render(this._filmsContainer, this._filmCardComponent);
-      return
-    };
+      return;
+    }
 
     if (this._filmsContainer.contains(prevFilmCardComponent.getElement())) {
       replace(this._filmCardComponent, prevFilmCardComponent);

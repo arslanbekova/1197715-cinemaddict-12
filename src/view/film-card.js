@@ -1,4 +1,5 @@
-import Abstract from "./abstract.js";
+// import Abstract from "./abstract.js";
+import Smart from "./smart.js";
 
 const createFilmCardTemplate = (film) => {
   const {
@@ -33,7 +34,7 @@ const createFilmCardTemplate = (film) => {
   );
 };
 
-export default class FilmCard extends Abstract {
+export default class FilmCard extends Smart {
   constructor(film) {
     super();
     this._film = film;
@@ -41,10 +42,22 @@ export default class FilmCard extends Abstract {
     this._onControlWatchlistClick = this._onControlWatchlistClick.bind(this);
     this._onControlWatchedClick = this._onControlWatchedClick.bind(this);
     this._onControlFavoriteClick = this._onControlFavoriteClick.bind(this);
+
+    this._setInnerHandlers();
   }
 
   getTemplate() {
     return createFilmCardTemplate(this._film);
+  }
+
+  restoreHandlers() {
+    this._setInnerHandlers();
+  }
+
+  _setInnerHandlers() {
+    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, this._onFilmCardElementClick);
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, this._onFilmCardElementClick);
+    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, this._onFilmCardElementClick);
   }
 
   _onFilmCardElementClick(evt) {
@@ -61,6 +74,9 @@ export default class FilmCard extends Abstract {
 
   _onControlWatchlistClick(evt) {
     evt.preventDefault();
+    this.updateData({
+      isAtWatchlist: !this._film.isAtWatchlist
+    });
     this._callback.onControlWatchlistClick();
   }
 
@@ -71,6 +87,9 @@ export default class FilmCard extends Abstract {
 
   _onControlWatchedClick(evt) {
     evt.preventDefault();
+    this.updateData({
+      isWatched: !this._film.isWatched
+    });
     this._callback.onControlWatchedClick();
   }
 
@@ -81,6 +100,9 @@ export default class FilmCard extends Abstract {
 
   _onControlFavoriteClick(evt) {
     evt.preventDefault();
+    this.updateData({
+      isFavorite: !this._film.isFavorite
+    });
     this._callback.onControlFavoriteClick();
   }
 

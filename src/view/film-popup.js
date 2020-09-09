@@ -179,6 +179,8 @@ export default class FilmPopup extends Smart {
     this._onControlWatchlistClick = this._onControlWatchlistClick.bind(this);
     this._onControlWatchedClick = this._onControlWatchedClick.bind(this);
     this._onControlFavoriteClick = this._onControlFavoriteClick.bind(this);
+
+    this._setInnerHandlers();
   }
 
   getTemplate() {
@@ -186,6 +188,14 @@ export default class FilmPopup extends Smart {
   }
 
   restoreHandlers() {
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._onPopupCloseBtnClick);
+    this._setInnerHandlers();
+  }
+
+  _setInnerHandlers() {
+    this.getElement().querySelector(`#watchlist`).addEventListener(`click`, this._onControlWatchlistClick);
+    this.getElement().querySelector(`#watched`).addEventListener(`click`, this._onControlWatchedClick);
+    this.getElement().querySelector(`#favorite`).addEventListener(`click `, this._onControlFavoriteClick);
   }
 
   _onPopupCloseBtnClick(evt) {
@@ -200,6 +210,9 @@ export default class FilmPopup extends Smart {
 
   _onControlWatchlistClick(evt) {
     evt.preventDefault();
+    this.updateData({
+      isAtWatchlist: !this._film.isAtWatchlist
+    });
     this._callback.onControlWatchlistClick();
   }
 
@@ -210,6 +223,9 @@ export default class FilmPopup extends Smart {
 
   _onControlWatchedClick(evt) {
     evt.preventDefault();
+    this.updateData({
+      isWatched: !this._film.isWatched
+    });
     this._callback.onControlWatchedClick();
   }
 
@@ -220,11 +236,14 @@ export default class FilmPopup extends Smart {
 
   _onControlFavoriteClick(evt) {
     evt.preventDefault();
+    this.updateData({
+      isFavorite: !this._film.isFavorite
+    });
     this._callback.onControlFavoriteClick();
   }
 
   setOnControlFavoriteClick(callback) {
     this._callback.onControlFavoriteClick = callback;
-    this.getElement().querySelector(`#favorite`).addEventListener(`click `, this._onControlFavoriteClick);
+    this.getElement().querySelector(`#favorite`).addEventListener(`click`, this._onControlFavoriteClick);
   }
 }

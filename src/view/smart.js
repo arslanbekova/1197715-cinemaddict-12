@@ -19,23 +19,22 @@ export default class Smart extends Abstract {
 
     parent.replaceChild(newElement, prevElement);
     prevElement = null;
-
     this.restoreHandlers();
   }
 
-  updateData(update, justDataUpdating) {
+  updateData(update) {
     if (!update) {
       return;
     }
 
     this._film = Object.assign({},
-      this._film,
-      update
+        this._film,
+        update
     );
 
-    if (justDataUpdating) {
-      return;
-    }
+    // if (justDataUpdating) {
+    //   return;
+    // }
 
     this.updateElement();
   }
